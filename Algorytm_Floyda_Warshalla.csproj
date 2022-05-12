@@ -52,6 +52,7 @@
     <Compile Include="Algorytm_Floyda_Warshalla.Designer.cs">
       <DependentUpon>Algorytm_Floyda_Warshalla.cs</DependentUpon>
     </Compile>
+    <Compile Include="Graf_MacierzWag.cs" />
     <Compile Include="Pulpit.cs">
       <SubType>Form</SubType>
     </Compile>
