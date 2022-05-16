@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorytm_Floyda_Warshalla", "Algorytm_Floyda_Warshalla.csproj", "{D667D637-4CE5-44E2-B9F2-8D13B7D66F85}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjektNr3_Palacz53262", "ProjektNr3_Palacz53262.csproj", "{D667D637-4CE5-44E2-B9F2-8D13B7D66F85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

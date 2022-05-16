@@ -28,13 +28,52 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.mpBTNLab = new System.Windows.Forms.Button();
+            this.mpBTNProjekt = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            // 
+            // mpBTNLab
+            // 
+            this.mpBTNLab.Location = new System.Drawing.Point(12, 12);
+            this.mpBTNLab.Name = "mpBTNLab";
+            this.mpBTNLab.Size = new System.Drawing.Size(75, 23);
+            this.mpBTNLab.TabIndex = 0;
+            this.mpBTNLab.Text = "Laboratoria";
+            this.mpBTNLab.UseVisualStyleBackColor = true;
+            this.mpBTNLab.Click += new System.EventHandler(this.mpBTNLab_Click);
+            // 
+            // mpBTNProjekt
+            // 
+            this.mpBTNProjekt.Location = new System.Drawing.Point(93, 12);
+            this.mpBTNProjekt.Name = "mpBTNProjekt";
+            this.mpBTNProjekt.Size = new System.Drawing.Size(110, 23);
+            this.mpBTNProjekt.TabIndex = 1;
+            this.mpBTNProjekt.Text = "ProjektNr3_53262";
+            this.mpBTNProjekt.UseVisualStyleBackColor = true;
+            this.mpBTNProjekt.Click += new System.EventHandler(this.mpBTNProjekt_Click);
+            // 
+            // Pulpit
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(214, 43);
+            this.Controls.Add(this.mpBTNProjekt);
+            this.Controls.Add(this.mpBTNLab);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.Name = "Pulpit";
+            this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Pulpit";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Pulpit_FormClosed);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Button mpBTNLab;
+        private System.Windows.Forms.Button mpBTNProjekt;
     }
 }
 

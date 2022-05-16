@@ -53,6 +53,12 @@
       <DependentUpon>Algorytm_Floyda_Warshalla.cs</DependentUpon>
     </Compile>
     <Compile Include="Graf_MacierzWag.cs" />
+    <Compile Include="ProjektNr3_Palacz53262.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProjektNr3_Palacz53262.Designer.cs">
+      <DependentUpon>ProjektNr3_Palacz53262.cs</DependentUpon>
+    </Compile>
     <Compile Include="Pulpit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,6 +79,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Pulpit.resx">
+      <DependentUpon>Pulpit.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

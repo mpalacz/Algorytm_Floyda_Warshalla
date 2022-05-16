@@ -14,10 +14,9 @@ namespace Algorytm_Floyda_Warshalla
     {
         const int mpBrakDrogi = int.MaxValue; // brak droki między węzłami
         ushort mpLiczbaWierzcholkowGrafu;
-        Font mpFontOpisuKontrolek = new Font("Times New Roman", 12, FontStyle.Italic);
-        // deklaracje zmiennych referencyjnych do kontrolek, które będą umieszczane na formularzu
-        Label mpLBLMacierzWag;
-        DataGridView mpDGVMacierzWag;
+        static int[,] mpMacierzWag; // macierz wag/sąsiedztwa
+        static int[,] mpMacierzOdleglosci; // macierz najkrótszych ścieżek (tras) grafu
+        static int[,] mpMacierzWezlowPosrednich; // macierz węzłów pośrednich dla ścieżek (tras) w grafie
 
         public Algorytm_Floyda_Warshalla()
         {
@@ -26,8 +25,6 @@ namespace Algorytm_Floyda_Warshalla
 
         private void mpTXTLiczbaWierzcholkowGrafu_TextChanged(object sender, EventArgs e)
         {
-            // ustawienie stanu braku aktywności dla kontrolki mpTXTLiczbaWierzcholkowGrafu
-            mpTXTLiczbaWierzcholkowGrafu.Enabled = false;
             // uaktywnienie przycisku poleceń dla umieszczenia kontrolki DataGridView na formularzu
             mpBTNMacierzWag.Enabled = true;
         }
@@ -39,25 +36,11 @@ namespace Algorytm_Floyda_Warshalla
             if (!ushort.TryParse(mpTXTLiczbaWierzcholkowGrafu.Text, out mpLiczbaWierzcholkowGrafu))
             {
                 mpErrorProvider1.SetError(mpTXTLiczbaWierzcholkowGrafu, "ERROR: w zapisie liczby wierchołów grafu wystąpił niedozwolony znak");
-                // dla umożliwienia poprawienia wpisanejk liczby wierchołków grafu
-                // uaktywaniamy kontrolkę mpTXTLiczbaWierzcholkowGrafu
-                mpTXTLiczbaWierzcholkowGrafu.Enabled = true;
                 return;
             }
-            // umieszcznie na formularzu etykiety opisującej kontrolkę DataGridView dla wpisania macierzy wag
-            mpLBLMacierzWag = new Label();
-            // sformatowanie kontrolki mpLBLMacierzWag
-            mpLBLMacierzWag.Font = mpFontOpisuKontrolek;
-            mpLBLMacierzWag.Text = "Macierz wag (sąsiedztwa)";
-            mpLBLMacierzWag.AutoSize = true;
-            mpLBLMacierzWag.Location = new Point(mpLBLLiczbaWGrafu.Location.X + mpLBLLiczbaWGrafu.Width + mpMargines, mpLBLOpisGrafu.Top);
+            // wyświetlenie kontrolki mpLBLMacierzWag
             mpLBLMacierzWag.Visible = true;
-            // umieszczenie sformatowanej kontrolki mpLBLMacierzWag
-            this.Controls.Add(mpLBLMacierzWag);
-            // utworzenie egzemplarza kontrolki DataGridView i sformatowanie jej oraz umieszczenie jej na formularzu
-            mpDGVMacierzWag = new DataGridView();
-            mpDGVMacierzWag.Location = new Point(mpLBLMacierzWag.Left, mpLBLMacierzWag.Top + mpLBLMacierzWag.Height + mpMargines / 2);
-            mpDGVMacierzWag.Size = new Size((mpLiczbaWierzcholkowGrafu + 1) * mpSzerokoscKolumny, (mpLiczbaWierzcholkowGrafu + 1) * mpWysokoscWiersza);
+            // sformatowanie mpDGVMacierzWag
             mpDGVMacierzWag.AutoResizeRows();
             mpDGVMacierzWag.ColumnCount = mpLiczbaWierzcholkowGrafu;
             mpDGVMacierzWag.ColumnHeadersVisible = true;
@@ -89,17 +72,17 @@ namespace Algorytm_Floyda_Warshalla
             // wpisanie "numerów" wierszy kontrolki DataGridView
             for (ushort mpI = 0; mpI < mpLiczbaWierzcholkowGrafu; mpI++)
                 mpDGVMacierzWag.Rows[mpI].HeaderCell.Value = $"({mpI})";
-            // dodanie sformatowanej kontrolki mpDGVMacierzWag do kolekcji Controls
-            Controls.Add(mpDGVMacierzWag);
-            // suatwienie trybu Auto... dla kotrolki mpDGVMacierzWag
+            // ustwienie trybu Auto... dla kotrolki mpDGVMacierzWag
             mpDGVMacierzWag.AutoResizeRowHeadersWidth(DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders);
             mpDGVMacierzWag.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            // wyzerowanie komórek w kontrolce DataGridView
+            // wyczyszczenie komórek w kontrolce DataGridView
             for (ushort mpI = 0; mpI < mpLiczbaWierzcholkowGrafu; mpI++)
                 for (ushort mpJ = 0; mpJ < mpLiczbaWierzcholkowGrafu; mpJ++)
                     mpDGVMacierzWag.Rows[mpI].Cells[mpJ].Value = "";
             // ustawienie stanu braku aktywności dla obsługiwanego przycisku
             mpBTNMacierzWag.Enabled = false;
+            // ustawienie stanu braku aktywności dla kontrolki mpTXTLiczbaWierzcholkowGrafu
+            mpTXTLiczbaWierzcholkowGrafu.Enabled = false;
             // ustawienie stanu aktywnosci dla dwóch następnych przecisków poleceń
             mpBTNPrzykladowaMacierzWag.Enabled = true;
             mpBTNAkceptacjaMacierzyWag.Enabled = true;
@@ -117,8 +100,15 @@ namespace Algorytm_Floyda_Warshalla
             if (mpLiczbaWierzcholkowGrafu != 5)
             {
                 mpErrorProvider1.SetError(mpBTNPrzykladowaMacierzWag, "ERROR: przykładowa " +
-                    "macierz wag może być wpisana do kontrolki DataGridView tylko dla grefu " +
+                    "macierz wag może być wpisana do kontrolki DataGridView tylko dla grafu " +
                     "o 5 węzłach");
+                // ustawienie stanu aktywności dla mpTXTLiczbaWierzcholkowGrafu
+                mpTXTLiczbaWierzcholkowGrafu.Enabled = true;
+                // ustawienie stanu aktywności dla mpBTNMacierzWag
+                mpBTNMacierzWag.Enabled = true;
+                // ustawienie stanu braku aktywnosci dla mpBTNPrzykladowaMacierzWag i mpBTNAkceptacjaMacierzyWag
+                mpBTNPrzykladowaMacierzWag.Enabled = false;
+                mpBTNAkceptacjaMacierzyWag.Enabled = false;
                 return;
             }
             // zgaszenie kotrolki mpErrorProvider1
@@ -136,43 +126,47 @@ namespace Algorytm_Floyda_Warshalla
             mpErrorProvider1.Dispose(); // zgaszenie kontrolki mpErrorProvider1
             // ustawić tryb ReadOnly dla kontrolki mpDGVMacierzWag
             mpDGVMacierzWag.ReadOnly = true;
+            // zmiana aktywności dla przycisków 
+            mpBTNAkceptacjaMacierzyWag.Enabled = false;
+            mpBTNPrzykladowaMacierzWag.Enabled = false;
+            mpBTNWyznaczSciezkiWGrafie.Enabled = true;
 
         }
         private void mpBTNWyznaczSciezkiWGrafie_Click(object sender, EventArgs e)
         {
-            // deklaracja i utworzenie macierzy wag dla rozpatrywanego grafu
-            int mpWaga;
             mpMacierzWag = new int[mpLiczbaWierzcholkowGrafu, mpLiczbaWierzcholkowGrafu];
             // pobranie macierzy wag z kontrolki mpDGVMacierzWag, która została umieszczona na formularzu
             for (ushort mpI = 0; mpI < mpLiczbaWierzcholkowGrafu; mpI++)
                 for (ushort mpJ = 0; mpJ < mpLiczbaWierzcholkowGrafu; mpJ++)
                     if (string.IsNullOrEmpty((string)mpDGVMacierzWag.Rows[mpI].Cells[mpJ].Value))
-                        mpMaceirzWag[mpI, mpJ] = mpBrakDrogi;
-                    else
-                        if (!int.TryParse((string)mpDGVMacierzWag.Rows[mpI].Cells[mpJ].Value, out mpWaga))
+                        mpMacierzWag[mpI, mpJ] = mpBrakDrogi;
+                    else if (!int.TryParse((string)mpDGVMacierzWag.Rows[mpI].Cells[mpJ].Value, out mpMacierzWag[mpI, mpJ]))
                     {
                         mpErrorProvider1.SetError(mpDGVMacierzWag, $"ERROR: w zapisie elementu kontrolki " +
                             $"DataGridView o indexie [{mpI}, {mpJ}] wystąpił niedozowlony znak");
                         return;
                     }
-            // macierz wag została pograna z formularza
             // utworzenie egzemplarza klasy Graf_MacierzWag
-            Graf_MacierzWag mpGraf = new Graf_MacierzWag((int[,])mpMacierzWag.Clone);
+            Graf_MacierzWag mpGraf = new Graf_MacierzWag((int[,])mpMacierzWag.Clone());
             // wyznaczenie najkrótszych ścieżek w grafie algorytmem Floyda-Warshalla
             mpGraf.mpAlgorytm_Floyda_Warshalla(out mpMacierzOdleglosci, out mpMacierzWezlowPosrednich);
 
             // wypisanie macierzy mpMacierzOdlegloscido do kontrolki DataGridView
             for (ushort mpI = 0; mpI < mpDGVMacierzOdleglosci.Rows.Count; mpI++)
                 for (ushort mpJ = 0; mpJ < mpDGVMacierzOdleglosci.Columns.Count; mpJ++)
-                    mpDGVMacierzOdleglosci.Rows[mpI].Cell[mpJ].Value = mpMcierzOdleglosci[mpI,mpJ];
+                    mpDGVMacierzOdleglosci.Rows[mpI].Cells[mpJ].Value = mpMacierzOdleglosci[mpI, mpJ];
             // ustawienie trybu ReadOnly dla kontrolki 
             mpDGVMacierzOdleglosci.ReadOnly = true;
             // wypisanie macierzy mpMacierzWezlowPosrednich do kontrolki DataGridView
             for (ushort mpI = 0; mpI < mpDGVMacierzWezlowPosrednich.Rows.Count; mpI++)
                 for (ushort mpJ = 0; mpJ < mpDGVMacierzWezlowPosrednich.Columns.Count; mpJ++)
-                    mpDGVMacierzWezlowPosrednich.Rows[mpI].Cell[mpJ].Value = mpDGVMacierzWezlowPosrednich[mpI, mpJ];
+                    mpDGVMacierzWezlowPosrednich.Rows[mpI].Cells[mpJ].Value = mpDGVMacierzWezlowPosrednich[mpI, mpJ];
             // ustawienie trybu ReadOnly dla kontrolki 
             mpDGVMacierzWezlowPosrednich.ReadOnly = true;
+            // ustawienie stanu braku aktywności dla przycisku poleceń
+            mpBTNWyznaczSciezkiWGrafie.Enabled = false;
+            // ustawienie stanu aktywności dla przycisku poleceń
+            mpBTNWypiszTrasy.Enabled = true;
         }
     }
 }
