@@ -168,5 +168,30 @@ namespace Algorytm_Floyda_Warshalla
             // ustawienie stanu aktywności dla przycisku poleceń
             mpBTNWypiszTrasy.Enabled = true;
         }
+
+        private void mpBTNWypiszTrasy_Click(object sender, EventArgs e)
+        {
+            mpBTNWypiszTrasy.Enabled = false; // zablokowanie przycisku
+            // wyświetlenie kontrolek
+            mpRTBTrasa.Visible = true; 
+            mpLBLTrasa.Visible = true;
+            string mpNapis = ""; // napis który zostanie wyświetlony w mpRTBTrasa
+
+            for(ushort mpJ=0;mpJ<mpMacierzOdleglosci.GetLength(0);mpJ++)
+                for(ushort mpI = 0; mpI < mpMacierzOdleglosci.GetLength(1); mpJ++)
+                {
+                    if (mpMacierzOdleglosci[mpJ, mpI] == mpBrakDrogi)
+                        mpNapis += $"{mpJ,3} --> {mpI,3} : między tymi węzłami nie ma trasy przejścia\n";
+                    else if (mpJ != mpI)
+                        mpNapis += $"{mpJ,3} --> {mpI,3}: długość (waga) drogi = {mpMacierzOdleglosci[mpJ,mpI]}" +
+                            $" -> poprzez węzły\n";
+                }
+            mpRTBTrasa.Text= mpNapis;
+        }
+
+        private void Algorytm_Floyda_Warshalla_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit(); // zamknięcie aplikacji przy zamknięciu okna
+        }
     }
 }

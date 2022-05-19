@@ -14,6 +14,7 @@ namespace Algorytm_Floyda_Warshalla
     {
         // deklaracja zmiennych reprezentujące pozostałe formularze
         ProjektNr3_Palacz53262 mpProjektNr3_Palacz = new ProjektNr3_Palacz53262();
+        Algorytm_Floyda_Warshalla mpAlgorytm_Floyda_Warshalla = new Algorytm_Floyda_Warshalla();
         public Pulpit()
         {
             InitializeComponent();
@@ -22,6 +23,7 @@ namespace Algorytm_Floyda_Warshalla
         private void mpBTNLab_Click(object sender, EventArgs e)
         {
             Hide(); // ukrycie bierzącego formularza
+            mpAlgorytm_Floyda_Warshalla.Show();
         }
 
         private void mpBTNProjekt_Click(object sender, EventArgs e)

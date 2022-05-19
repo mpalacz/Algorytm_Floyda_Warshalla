@@ -39,9 +39,9 @@
             this.mpBTNWyznaczSciezkiWGrafie = new System.Windows.Forms.Button();
             this.mpBTNWypiszTrasy = new System.Windows.Forms.Button();
             this.mpLBLMacierzWag = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.mpLBLMacierzOdleglosci = new System.Windows.Forms.Label();
+            this.mpLBLMacierzWezlowPosrednich = new System.Windows.Forms.Label();
+            this.mpLBLTrasa = new System.Windows.Forms.Label();
             this.mpDGVMacierzWag = new System.Windows.Forms.DataGridView();
             this.mpDGVMacierzOdleglosci = new System.Windows.Forms.DataGridView();
             this.mpDGVMacierzWezlowPosrednich = new System.Windows.Forms.DataGridView();
@@ -139,6 +139,7 @@
             this.mpBTNWypiszTrasy.TabIndex = 7;
             this.mpBTNWypiszTrasy.Text = "Wypisz najkrótsze trasy między węzłami";
             this.mpBTNWypiszTrasy.UseVisualStyleBackColor = true;
+            this.mpBTNWypiszTrasy.Click += new System.EventHandler(this.mpBTNWypiszTrasy_Click);
             // 
             // mpLBLMacierzWag
             // 
@@ -151,38 +152,38 @@
             this.mpLBLMacierzWag.Text = "Macierz wag (sąsiedztwa):";
             this.mpLBLMacierzWag.Visible = false;
             // 
-            // label4
+            // mpLBLMacierzOdleglosci
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label4.Location = new System.Drawing.Point(202, 243);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(276, 19);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "Macierz odległości między węzłami grafu:";
-            this.label4.Visible = false;
+            this.mpLBLMacierzOdleglosci.AutoSize = true;
+            this.mpLBLMacierzOdleglosci.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.mpLBLMacierzOdleglosci.Location = new System.Drawing.Point(202, 243);
+            this.mpLBLMacierzOdleglosci.Name = "mpLBLMacierzOdleglosci";
+            this.mpLBLMacierzOdleglosci.Size = new System.Drawing.Size(276, 19);
+            this.mpLBLMacierzOdleglosci.TabIndex = 9;
+            this.mpLBLMacierzOdleglosci.Text = "Macierz odległości między węzłami grafu:";
+            this.mpLBLMacierzOdleglosci.Visible = false;
             // 
-            // label5
+            // mpLBLMacierzWezlowPosrednich
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label5.Location = new System.Drawing.Point(202, 418);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(189, 19);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "Macierz węzłów pośrednich:";
-            this.label5.Visible = false;
+            this.mpLBLMacierzWezlowPosrednich.AutoSize = true;
+            this.mpLBLMacierzWezlowPosrednich.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.mpLBLMacierzWezlowPosrednich.Location = new System.Drawing.Point(202, 418);
+            this.mpLBLMacierzWezlowPosrednich.Name = "mpLBLMacierzWezlowPosrednich";
+            this.mpLBLMacierzWezlowPosrednich.Size = new System.Drawing.Size(189, 19);
+            this.mpLBLMacierzWezlowPosrednich.TabIndex = 10;
+            this.mpLBLMacierzWezlowPosrednich.Text = "Macierz węzłów pośrednich:";
+            this.mpLBLMacierzWezlowPosrednich.Visible = false;
             // 
-            // label6
+            // mpLBLTrasa
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label6.Location = new System.Drawing.Point(611, 68);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(263, 19);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "Najkrótsze trasy między węzłami grafu:";
-            this.label6.Visible = false;
+            this.mpLBLTrasa.AutoSize = true;
+            this.mpLBLTrasa.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.mpLBLTrasa.Location = new System.Drawing.Point(611, 68);
+            this.mpLBLTrasa.Name = "mpLBLTrasa";
+            this.mpLBLTrasa.Size = new System.Drawing.Size(263, 19);
+            this.mpLBLTrasa.TabIndex = 11;
+            this.mpLBLTrasa.Text = "Najkrótsze trasy między węzłami grafu:";
+            this.mpLBLTrasa.Visible = false;
             // 
             // mpDGVMacierzWag
             // 
@@ -229,9 +230,9 @@
             this.Controls.Add(this.mpDGVMacierzWezlowPosrednich);
             this.Controls.Add(this.mpDGVMacierzOdleglosci);
             this.Controls.Add(this.mpDGVMacierzWag);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.mpLBLTrasa);
+            this.Controls.Add(this.mpLBLMacierzWezlowPosrednich);
+            this.Controls.Add(this.mpLBLMacierzOdleglosci);
             this.Controls.Add(this.mpLBLMacierzWag);
             this.Controls.Add(this.mpBTNWypiszTrasy);
             this.Controls.Add(this.mpBTNWyznaczSciezkiWGrafie);
@@ -249,6 +250,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Algorytm_Floyda_Warshalla";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Algorytm_Floyda_Warshalla_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.mpErrorProvider1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mpDGVMacierzWag)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mpDGVMacierzOdleglosci)).EndInit();
@@ -269,9 +271,9 @@
         private System.Windows.Forms.TextBox mpTXTLiczbaWierzcholkowGrafu;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label mpLBLTrasa;
+        private System.Windows.Forms.Label mpLBLMacierzWezlowPosrednich;
+        private System.Windows.Forms.Label mpLBLMacierzOdleglosci;
         private System.Windows.Forms.Label mpLBLMacierzWag;
         private System.Windows.Forms.DataGridView mpDGVMacierzWezlowPosrednich;
         private System.Windows.Forms.DataGridView mpDGVMacierzOdleglosci;
