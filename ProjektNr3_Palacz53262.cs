@@ -16,5 +16,10 @@ namespace Algorytm_Floyda_Warshalla
         {
             InitializeComponent();
         }
+
+        private void ProjektNr3_Palacz53262_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

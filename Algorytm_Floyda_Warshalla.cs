@@ -28,6 +28,50 @@ namespace Algorytm_Floyda_Warshalla
             // uaktywnienie przycisku poleceń dla umieszczenia kontrolki DataGridView na formularzu
             mpBTNMacierzWag.Enabled = true;
         }
+
+        private void mpFormatowanieDGV(ref DataGridView mpDataGridView)
+        {
+            // sformatowanie mpDGVMacierzWag
+            mpDataGridView.AutoResizeRows();
+            mpDataGridView.ColumnCount = mpLiczbaWierzcholkowGrafu;
+            mpDataGridView.ColumnHeadersVisible = true;
+            mpDataGridView.ReadOnly = false;
+            mpDataGridView.AllowUserToResizeRows = false;
+            mpDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            mpDataGridView.MultiSelect = false;
+            // sformatowanie nagłówka kolumn
+            DataGridViewCellStyle mpStylHeaderKolumn = new DataGridViewCellStyle();
+            mpStylHeaderKolumn.Font = new Font("Arial", 10, FontStyle.Bold);
+            mpStylHeaderKolumn.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            mpStylHeaderKolumn.Format = "    ";
+            // przypisanie ustalonego formatu nagłówka kolumn do kontrolki DataGridView
+            mpDataGridView.ColumnHeadersDefaultCellStyle = mpStylHeaderKolumn;
+            DataGridViewCellStyle mpStylHeaderWierszy = new DataGridViewCellStyle();
+            mpStylHeaderWierszy.Font = new Font("Arial", 10, FontStyle.Bold);
+            mpStylHeaderWierszy.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            // przypisanie ustalonego formatu nagłówka wioerszy do kontrolki DataGridView
+            mpDataGridView.RowHeadersDefaultCellStyle = mpStylHeaderWierszy;
+            // wpisanie nazw w wierszu nagłówkowym kolumn
+            for (ushort mpI = 0; mpI < mpLiczbaWierzcholkowGrafu; mpI++)
+                mpDataGridView.Columns[mpI].HeaderText = "(" + mpI + ")";
+            // dodanie wierszy do kontrolki DataGridView
+            for (ushort mpI = 0; mpI < mpLiczbaWierzcholkowGrafu; mpI++)
+            {
+                mpDataGridView.Rows.Add();
+                mpDataGridView.AutoResizeRow(mpI);
+            }
+            // wpisanie "numerów" wierszy kontrolki DataGridView
+            for (ushort mpI = 0; mpI < mpLiczbaWierzcholkowGrafu; mpI++)
+                mpDataGridView.Rows[mpI].HeaderCell.Value = $"({mpI})";
+            // ustwienie trybu Auto... dla kotrolki mpDGVMacierzWag
+            mpDataGridView.AutoResizeRowHeadersWidth(DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders);
+            mpDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            // wyczyszczenie komórek w kontrolce DataGridView
+            for (ushort mpI = 0; mpI < mpLiczbaWierzcholkowGrafu; mpI++)
+                for (ushort mpJ = 0; mpJ < mpLiczbaWierzcholkowGrafu; mpJ++)
+                    mpDataGridView.Rows[mpI].Cells[mpJ].Value = "";
+        }
+
         private void mpBTNMacierzWag_Click(object sender, EventArgs e)
         {
             // zgaszenie kontrolki errorProvider
@@ -41,48 +85,13 @@ namespace Algorytm_Floyda_Warshalla
             // wyświetlenie kontrolki mpLBLMacierzWag
             mpLBLMacierzWag.Visible = true;
             // sformatowanie mpDGVMacierzWag
-            mpDGVMacierzWag.AutoResizeRows();
-            mpDGVMacierzWag.ColumnCount = mpLiczbaWierzcholkowGrafu;
-            mpDGVMacierzWag.ColumnHeadersVisible = true;
-            mpDGVMacierzWag.ReadOnly = false;
-            mpDGVMacierzWag.AllowUserToResizeRows = false;
-            mpDGVMacierzWag.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            mpDGVMacierzWag.MultiSelect = false;
-            // sformatowanie nagłówka kolumn
-            DataGridViewCellStyle mpStylHeaderKolumn = new DataGridViewCellStyle();
-            mpStylHeaderKolumn.Font = new Font("Arial", 10, FontStyle.Bold);
-            mpStylHeaderKolumn.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            mpStylHeaderKolumn.Format = "    ";
-            // przypisanie ustalonego formatu nagłówka kolumn do kontrolki DataGridView
-            mpDGVMacierzWag.ColumnHeadersDefaultCellStyle = mpStylHeaderKolumn;
-            DataGridViewCellStyle mpStylHeaderWierszy = new DataGridViewCellStyle();
-            mpStylHeaderWierszy.Font = new Font("Arial", 10, FontStyle.Bold);
-            mpStylHeaderWierszy.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            // przypisanie ustalonego formatu nagłówka wioerszy do kontrolki DataGridView
-            mpDGVMacierzWag.RowHeadersDefaultCellStyle = mpStylHeaderWierszy;
-            // wpisanie nazw w wierszu nagłówkowym kolumn
-            for (ushort mpI = 0; mpI < mpLiczbaWierzcholkowGrafu; mpI++)
-                mpDGVMacierzWag.Columns[mpI].HeaderText = "(" + mpI + ")";
-            // dodanie wierszy do kontrolki DataGridView
-            for (ushort mpI = 0; mpI < mpLiczbaWierzcholkowGrafu; mpI++)
-            {
-                mpDGVMacierzWag.Rows.Add();
-                mpDGVMacierzWag.AutoResizeRow(mpI);
-            }
-            // wpisanie "numerów" wierszy kontrolki DataGridView
-            for (ushort mpI = 0; mpI < mpLiczbaWierzcholkowGrafu; mpI++)
-                mpDGVMacierzWag.Rows[mpI].HeaderCell.Value = $"({mpI})";
-            // ustwienie trybu Auto... dla kotrolki mpDGVMacierzWag
-            mpDGVMacierzWag.AutoResizeRowHeadersWidth(DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders);
-            mpDGVMacierzWag.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            // wyczyszczenie komórek w kontrolce DataGridView
-            for (ushort mpI = 0; mpI < mpLiczbaWierzcholkowGrafu; mpI++)
-                for (ushort mpJ = 0; mpJ < mpLiczbaWierzcholkowGrafu; mpJ++)
-                    mpDGVMacierzWag.Rows[mpI].Cells[mpJ].Value = "";
+            mpFormatowanieDGV(ref mpDGVMacierzWag);
             // ustawienie stanu braku aktywności dla obsługiwanego przycisku
             mpBTNMacierzWag.Enabled = false;
             // ustawienie stanu braku aktywności dla kontrolki mpTXTLiczbaWierzcholkowGrafu
             mpTXTLiczbaWierzcholkowGrafu.Enabled = false;
+            // pokazanie mpDGVMacierzWag
+            mpDGVMacierzWag.Visible = true;
             // ustawienie stanu aktywnosci dla dwóch następnych przecisków poleceń
             mpBTNPrzykladowaMacierzWag.Enabled = true;
             mpBTNAkceptacjaMacierzyWag.Enabled = true;
@@ -90,11 +99,11 @@ namespace Algorytm_Floyda_Warshalla
         private void mpBTNPrzykladowaMacierzWag_Click(object sender, EventArgs e)
         {
             int[,] mpPrzykladowyGraf ={
-                { mpBrakDrogi,mpBrakDrogi,mpBrakDrogi,3,mpBrakDrogi},
-                { 3,mpBrakDrogi,4,1,mpBrakDrogi},
-                {mpBrakDrogi,-1,mpBrakDrogi,2,mpBrakDrogi },
-                {-2,5,mpBrakDrogi,mpBrakDrogi,2 },
-                { mpBrakDrogi,mpBrakDrogi,1,mpBrakDrogi,mpBrakDrogi}
+                { mpBrakDrogi, mpBrakDrogi, mpBrakDrogi, 3, mpBrakDrogi},
+                { 3, mpBrakDrogi, 4, 1, mpBrakDrogi},
+                {mpBrakDrogi, -1, mpBrakDrogi, 2, mpBrakDrogi },
+                {-2, 5, mpBrakDrogi, mpBrakDrogi, 2 },
+                { mpBrakDrogi, mpBrakDrogi, 1, mpBrakDrogi, mpBrakDrogi }
             };
             // sprawdzenie, czy liczba wierzchołków grafu jest równa 5
             if (mpLiczbaWierzcholkowGrafu != 5)
@@ -114,8 +123,8 @@ namespace Algorytm_Floyda_Warshalla
             // zgaszenie kotrolki mpErrorProvider1
             mpErrorProvider1.Dispose();
             // wpisanie macierzy wag do kontrolki mpDVGMacierWag, która jest już umieszczona w formularzu
-            for (ushort mpI = 0; mpI < mpDGVMacierzWag.Rows.Count; mpI++)
-                for (ushort mpJ = 0; mpJ < mpDGVMacierzWag.Columns.Count; mpJ++)
+            for (ushort mpI = 0; mpI < mpPrzykladowyGraf.GetLength(0); mpI++)
+                for (ushort mpJ = 0; mpJ < mpPrzykladowyGraf.GetLength(1); mpJ++)
                     if (mpPrzykladowyGraf[mpI, mpJ] == mpBrakDrogi)
                         mpDGVMacierzWag.Rows[mpI].Cells[mpJ].Value = "";
                     else
@@ -135,12 +144,15 @@ namespace Algorytm_Floyda_Warshalla
         private void mpBTNWyznaczSciezkiWGrafie_Click(object sender, EventArgs e)
         {
             mpMacierzWag = new int[mpLiczbaWierzcholkowGrafu, mpLiczbaWierzcholkowGrafu];
+            // formatowanie mpDGVMacierzOdleglosci i mpDGVMacierzWezlowPosrednich
+            mpFormatowanieDGV(ref mpDGVMacierzOdleglosci);
+            mpFormatowanieDGV(ref mpDGVMacierzWezlowPosrednich);
             // pobranie macierzy wag z kontrolki mpDGVMacierzWag, która została umieszczona na formularzu
             for (ushort mpI = 0; mpI < mpLiczbaWierzcholkowGrafu; mpI++)
                 for (ushort mpJ = 0; mpJ < mpLiczbaWierzcholkowGrafu; mpJ++)
-                    if (string.IsNullOrEmpty((string)mpDGVMacierzWag.Rows[mpI].Cells[mpJ].Value))
+                    if (string.IsNullOrEmpty(Convert.ToString(mpDGVMacierzWag.Rows[mpI].Cells[mpJ].Value)))
                         mpMacierzWag[mpI, mpJ] = mpBrakDrogi;
-                    else if (!int.TryParse((string)mpDGVMacierzWag.Rows[mpI].Cells[mpJ].Value, out mpMacierzWag[mpI, mpJ]))
+                    else if (!int.TryParse(Convert.ToString(mpDGVMacierzWag.Rows[mpI].Cells[mpJ].Value), out mpMacierzWag[mpI, mpJ]))
                     {
                         mpErrorProvider1.SetError(mpDGVMacierzWag, $"ERROR: w zapisie elementu kontrolki " +
                             $"DataGridView o indexie [{mpI}, {mpJ}] wystąpił niedozowlony znak");
@@ -152,41 +164,24 @@ namespace Algorytm_Floyda_Warshalla
             mpGraf.mpAlgorytm_Floyda_Warshalla(out mpMacierzOdleglosci, out mpMacierzWezlowPosrednich);
 
             // wypisanie macierzy mpMacierzOdlegloscido do kontrolki DataGridView
-            for (ushort mpI = 0; mpI < mpDGVMacierzOdleglosci.Rows.Count; mpI++)
-                for (ushort mpJ = 0; mpJ < mpDGVMacierzOdleglosci.Columns.Count; mpJ++)
+            for (ushort mpI = 0; mpI < mpLiczbaWierzcholkowGrafu; mpI++)
+                for (ushort mpJ = 0; mpJ < mpLiczbaWierzcholkowGrafu; mpJ++)
                     mpDGVMacierzOdleglosci.Rows[mpI].Cells[mpJ].Value = mpMacierzOdleglosci[mpI, mpJ];
             // ustawienie trybu ReadOnly dla kontrolki 
             mpDGVMacierzOdleglosci.ReadOnly = true;
             // wypisanie macierzy mpMacierzWezlowPosrednich do kontrolki DataGridView
-            for (ushort mpI = 0; mpI < mpDGVMacierzWezlowPosrednich.Rows.Count; mpI++)
-                for (ushort mpJ = 0; mpJ < mpDGVMacierzWezlowPosrednich.Columns.Count; mpJ++)
-                    mpDGVMacierzWezlowPosrednich.Rows[mpI].Cells[mpJ].Value = mpDGVMacierzWezlowPosrednich[mpI, mpJ];
+            for (ushort mpI = 0; mpI < mpLiczbaWierzcholkowGrafu; mpI++)
+                for (ushort mpJ = 0; mpJ < mpLiczbaWierzcholkowGrafu; mpJ++)
+                    mpDGVMacierzWezlowPosrednich.Rows[mpI].Cells[mpJ].Value = mpMacierzWezlowPosrednich[mpI, mpJ];
             // ustawienie trybu ReadOnly dla kontrolki 
             mpDGVMacierzWezlowPosrednich.ReadOnly = true;
             // ustawienie stanu braku aktywności dla przycisku poleceń
             mpBTNWyznaczSciezkiWGrafie.Enabled = false;
-            // ustawienie stanu aktywności dla przycisku poleceń
-            mpBTNWypiszTrasy.Enabled = true;
-        }
-
-        private void mpBTNWypiszTrasy_Click(object sender, EventArgs e)
-        {
-            mpBTNWypiszTrasy.Enabled = false; // zablokowanie przycisku
-            // wyświetlenie kontrolek
-            mpRTBTrasa.Visible = true; 
-            mpLBLTrasa.Visible = true;
-            string mpNapis = ""; // napis który zostanie wyświetlony w mpRTBTrasa
-
-            for(ushort mpJ=0;mpJ<mpMacierzOdleglosci.GetLength(0);mpJ++)
-                for(ushort mpI = 0; mpI < mpMacierzOdleglosci.GetLength(1); mpJ++)
-                {
-                    if (mpMacierzOdleglosci[mpJ, mpI] == mpBrakDrogi)
-                        mpNapis += $"{mpJ,3} --> {mpI,3} : między tymi węzłami nie ma trasy przejścia\n";
-                    else if (mpJ != mpI)
-                        mpNapis += $"{mpJ,3} --> {mpI,3}: długość (waga) drogi = {mpMacierzOdleglosci[mpJ,mpI]}" +
-                            $" -> poprzez węzły\n";
-                }
-            mpRTBTrasa.Text= mpNapis;
+            // wyświetlenie kontrolek z wynikami
+            mpLBLMacierzOdleglosci.Visible = true;
+            mpDGVMacierzOdleglosci.Visible = true;
+            mpLBLMacierzWezlowPosrednich.Visible = true;
+            mpDGVMacierzWezlowPosrednich.Visible = true;
         }
 
         private void Algorytm_Floyda_Warshalla_FormClosed(object sender, FormClosedEventArgs e)
