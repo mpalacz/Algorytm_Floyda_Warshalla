@@ -34,19 +34,29 @@ namespace Algorytm_Floyda_Warshalla
         // deklaracja metody dla algorytmu Floyda-Warshalla
         public void mpAlgorytm_Floyda_Warshalla(out int[,] mpMacierzOdleglosci, out int[,] mpMacierzWezlowPosrednich)
         {
+            int mpW; // zmienna pomocnicza
             // zapis algorytmu Floyda-Warshalla
             for (ushort mpK = 0; mpK < mpMacierzWag.GetLength(0); mpK++)
-                for (ushort mpJ = 0; mpJ < this.mpMacierzOdleglosci.GetLength(0); mpJ++)
-                    for (ushort mpI = 0; mpI < this.mpMacierzOdleglosci.GetLength(1); mpI++)
-                        if (this.mpMacierzOdleglosci[mpJ, mpK] + this.mpMacierzOdleglosci[mpK, mpI] < this.mpMacierzOdleglosci[mpJ, mpI])
+                for (ushort mpI = 0; mpI < this.mpMacierzOdleglosci.GetLength(0); mpI++)
+                    for (ushort mpJ = 0; mpJ < this.mpMacierzOdleglosci.GetLength(1); mpJ++)
+                    {
+                        if (this.mpMacierzOdleglosci[mpI, mpK] == mpBrakDrogi || this.mpMacierzOdleglosci[mpK, mpJ] == mpBrakDrogi) continue;
+                        mpW = this.mpMacierzOdleglosci[mpI, mpK] + this.mpMacierzOdleglosci[mpK, mpJ];
+                        if (mpW < this.mpMacierzOdleglosci[mpI, mpJ])
                         {
-                            this.mpMacierzOdleglosci[mpJ, mpI] = this.mpMacierzOdleglosci[mpJ, mpK] + this.mpMacierzOdleglosci[mpK, mpI];
+                            this.mpMacierzOdleglosci[mpI, mpJ] = mpW;
                             // zapisanie numeru węzła pośredniego k
-                            this.mpMacierzWezlowPosrednich[mpJ, mpI] = mpK;
+                            this.mpMacierzWezlowPosrednich[mpI, mpJ] = mpK;
                         }
+                    }
             // przekazanie (przesłanie) wyników działania algorytmu Floyda - Warshalla
             mpMacierzOdleglosci = this.mpMacierzOdleglosci;
             mpMacierzWezlowPosrednich = this.mpMacierzWezlowPosrednich;
+        }
+        // deklaracja metody dla algorytmu Dijkstry
+        public void mpAlgorytmDijkstry(out int[,] mpMacierzOdleglosci, out int[,] mpMacierzWezlowPosrednich)
+        {
+
         }
     }
 }

@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Algorytm_Floyda_Warshalla
@@ -29,7 +23,8 @@ namespace Algorytm_Floyda_Warshalla
             mpBTNMacierzWag.Enabled = true;
         }
 
-        private void mpFormatowanieDGV(ref DataGridView mpDataGridView)
+        // funkcja zawierająca komendy do sformatowania kontrolek DataGridView
+        public void mpFormatowanieDGV(ref DataGridView mpDataGridView)
         {
             // sformatowanie mpDGVMacierzWag
             mpDataGridView.AutoResizeRows();
