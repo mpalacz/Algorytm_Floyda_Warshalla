@@ -9,16 +9,16 @@ namespace Algorytm_Floyda_Warshalla
         // lista sąsiedztwa z wagami opierająca się na przykładowym grafie z laboratoriów
         static int[,] mpListaSasiedztwa =
         {
-                {0,3,3 },
-                {1,0,3 },
-                {1,2,4 },
-                {1,3,1 },
-                {2,1,-1 },
-                {2,3,2 },
-                {3,0,-3 },
-                {3,1,5 },
-                {3,4,2 },
-                {4,2,1 }
+                {0, 3, 3},
+                {1, 0, 3},
+                {1, 2, 4},
+                {1, 3, 1},
+                {2, 1, 1},
+                {2, 3, 2},
+                {3, 0, 3},
+                {3, 1, 5},
+                {3, 4, 2},
+                {4, 2, 1}
         };
         static int[] mpKosztyPrzejscia = new int[mpIloscWierzcholkow]; // tablica kosztów przejścia między wierzchołkami
         static int[] mpPoprzednieWierzcholki = new int[mpIloscWierzcholkow]; // tablica poprzednich wierzchołków przez które "przechodził" algorytm
