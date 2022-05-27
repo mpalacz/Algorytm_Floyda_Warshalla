@@ -121,7 +121,7 @@
             this.mpBTNWyznaczSciezkiWGrafie.Enabled = false;
             this.mpBTNWyznaczSciezkiWGrafie.Location = new System.Drawing.Point(16, 296);
             this.mpBTNWyznaczSciezkiWGrafie.Name = "mpBTNWyznaczSciezkiWGrafie";
-            this.mpBTNWyznaczSciezkiWGrafie.Size = new System.Drawing.Size(179, 69);
+            this.mpBTNWyznaczSciezkiWGrafie.Size = new System.Drawing.Size(179, 88);
             this.mpBTNWyznaczSciezkiWGrafie.TabIndex = 6;
             this.mpBTNWyznaczSciezkiWGrafie.Text = "Wyznacz najkrótsze ścieżki w grafie według algorytmu Floyda Warshalla";
             this.mpBTNWyznaczSciezkiWGrafie.UseVisualStyleBackColor = true;

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Algorytm_Floyda_Warshalla
+﻿namespace Algorytm_Floyda_Warshalla
 {
     class Graf_MacierzWag
     {
@@ -52,11 +46,6 @@ namespace Algorytm_Floyda_Warshalla
             // przekazanie (przesłanie) wyników działania algorytmu Floyda - Warshalla
             mpMacierzOdleglosci = this.mpMacierzOdleglosci;
             mpMacierzWezlowPosrednich = this.mpMacierzWezlowPosrednich;
-        }
-        // deklaracja metody dla algorytmu Dijkstry
-        public void mpAlgorytmDijkstry(out int[,] mpMacierzOdleglosci, out int[,] mpMacierzWezlowPosrednich)
-        {
-
         }
     }
 }
